@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget App</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+    <div class="hero">
+        <h1 class="title">My Budget for <span class="current_month">Month</span></h1>
+
+        <h2 class="budget-value">IDR <span class="total_budget">+10.000</span></h2>   
+
+        <div class="income-expense">
+            <div class="total-income">
+                <p class="budget-income-text">INCOME</p>
+                <p class="budget-income-value">IDR <span>20.000</span></p>
+            </div>
+            <div class="total-expense">
+                <p class="budget-expense-text">EXPENSE</p>
+                <p class="budget-expense-value">IDR <span>20.000</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="input-container">
+            <div class="input-budget">
+                <div class="input_type">
+                    <select class="budget_type">
+                        <option value="inc">+</option>
+                        <option value="exp">-</option>
+                    </select>
+                </div>
+                <input type="text" class="input-description" value="" placeholder="Add Description">
+                <input type="number" class="input-value" value="" placeholder="Value">
+                <button class="input_btn"><i class="fas fa-check"></i></button>                
+            </div>
+        </div>
+
+        <div class="income-expense-container">
+            <div class="income-container">
+                <h2 class="income-title">INCOME</h2>
+                <div class="income-list">
+                    <!-- income content -->
+                    <!-- <div class="item" id="income-0">
+                        <div class="item-description">gaji</div>
+                        <div class="value-cta">
+                            <div class="item-value">+20.000</div>
+                            <div class="item-delete">
+                                <button><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            
+            <div class="expense-container">
+                <h2 class="expense-title">EXPENSE</h2>
+                <div class="expense-list">
+                    <!-- expense item -->
+                    <!-- <div class="item" id="expense-0">
+                        <div class="item-description">gaji</div>
+                        <div class="value-cta">
+                            <div class="item-value">-20.000</div>
+                            <div class="item-delete">
+                                <button><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html>
