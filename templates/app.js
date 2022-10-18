@@ -107,10 +107,12 @@ const renderItem = (id, type, description, value, parentContainer) => {
     if (type === 'inc'){
         renderedItem = `
             <div class="item" id="income-${id}">
+                <div class="item-date">${new Date().toJSON().slice(0, 10)}</div>
                 <div class="item-description">${description}</div>
                 <div class="value-cta">
                     <div class="item-value">${formatNumber(value, 'inc')}</div>
-                    <div class="item-delete">
+                    <div class="item-delete-update">
+                        <button><i class="fas fa-edit"></i></button>
                         <button><i class="fas fa-times"></i></button>
                     </div>
                 </div>
@@ -119,10 +121,12 @@ const renderItem = (id, type, description, value, parentContainer) => {
     } else if (type === 'exp') {
         renderedItem = `
             <div class="item" id="expense-${id}">
+                <div class="item-date">${new Date().toJSON().slice(0, 10)}</div>
                 <div class="item-description">${description}</div>
                 <div class="value-cta">
                     <div class="item-value">${formatNumber(value, 'exp')}</div>
-                    <div class="item-delete">
+                    <div class="item-delete-update">
+                        <button><i class="fas fa-edit"></i></button>
                         <button><i class="fas fa-times"></i></button>
                     </div>
                 </div>
