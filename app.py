@@ -20,7 +20,7 @@ def home():
 @app.route('/budgetin', methods=['GET'])
 def budgetin_get():
     budget_list = list(db.budgetin.find({}, {'_id': False}))
-    return jsonify({'budget': budget_list})
+    return jsonify({'budgets': budget_list})
 
 # Menambahkan data dari form (dari client) ke server
 @app.route("/budgetin/post", methods=["POST"])

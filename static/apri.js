@@ -37,9 +37,9 @@ function show_budget() {
         url: "/budgetin",
         data: {},
         success: function (response) {
-        let rows = response["budget"];
+        let rows = response["budgets"];
             for (let i = 0; i < rows.length; i++) {
-              if (row[i]['type'] === 'inc'){
+              if (rows[i]['type'] === 'inc'){
                   let num = rows[i]["num"];
                   let date = rows[i]["date"];
                   let description = rows[i]["description"];
@@ -60,7 +60,7 @@ function show_budget() {
                   `
                   $("#income-list").append(temp_html_income);
 
-              } else if (row[i]['type'] === 'exp') {
+              } else if (rows[i]['type'] === 'exp') {
                   let num = rows[i]["num"];
                   let date = rows[i]["date"];
                   let description = rows[i]["description"];
@@ -96,19 +96,6 @@ function show_budget() {
 // });
 // }
 
-
-    //   function add_budget() {
-    //     let bucket = $("#bucket").val();
-    //     $.ajax({
-    //       type: "POST",
-    //       url: "/bucket",
-    //       data: { bucket_give: bucket },
-    //       success: function (response) {
-    //         //alert(response["msg"]);
-    //         window.location.reload();
-    //       },
-    //     });
-    //   }
     //   function update_budget(num) {
     //     $.ajax({
     //       type: "POST",
