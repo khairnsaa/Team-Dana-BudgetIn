@@ -24,6 +24,13 @@ const formatNumber = (number, type) => {
     return `${type === 'inc' ? '+' : '-'} ${rupiah}` 
 }
 
+// Mengubah tanggal dari timestamp menjadi tanggal biasanya
+function date_convert(date){
+    var d = new Date(date*1000);
+    return d.toDateString()
+}
+
+
 // Menampilkan daftar budget dari server (server dapat dari database)
 function show_budget() {
     // Mengosongkan daftar income dan expense
@@ -46,7 +53,7 @@ function show_budget() {
 
                   temp_html_income = `
                   <div class="item" id="income-${num}">
-                    <div class="item-date">${date}</div>
+                    <div class="item-date">${date_convert(date)}</div>
                     <div class="item-description">${description}</div>
                         <div class="value-cta">
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
@@ -85,14 +92,14 @@ function show_budget() {
 
 function delete_budget(num) {
     $.ajax({
-    type: "POST",
-    url: "/delete",
-    data: { num_give: num },
-    success: function (response) {
-    //alert(response["msg"]);
-    window.location.reload();
-    },
-});
+        type: "POST",
+        url: "/delete",
+        data: { num_give: num },
+        success: function (response) {
+        console.log(response)
+        window.location.reload();
+        },
+    });
 }
 
     //   function update_budget(num) {
@@ -125,9 +132,9 @@ function post_budget() {
         },
         success:function (response){
         console.log(response)
+        window.location.reload();
         }
 })
-window.location.reload();
 }
 
 $(".input_btn").click(function () {

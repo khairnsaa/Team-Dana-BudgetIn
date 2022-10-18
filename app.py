@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
+import time
 
 client = MongoClient('mongodb+srv://ayam:ayam@cluster0.chzg4j4.mongodb.net/?retryWrites=true&w=majority')
 
@@ -43,7 +44,7 @@ def budgetin_post():
     # Mengumpulkan data menjadi 1 objek/array, mempermudah pengiriman
     doc = {
         'num' : num,
-        # 'date': date_receive,
+        'date': int(time.time()),
         'type': type_receive,
         'description': description_receive,
         'value' : value_receive
