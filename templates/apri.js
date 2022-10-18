@@ -79,8 +79,21 @@ function show_budget() {
                         </div>
                   </div>
                   `
-                  $("#expense-list").append(temp_html_expense);
-              }
+                  $("#expense-list").append(temp_html_expense);}}}
+    }
+}
+
+function delete_budget(num) {
+    $.ajax({
+    type: "POST",
+    url: "/delete",
+    data: { num_give: num },
+    success: function (response) {
+    //alert(response["msg"]);
+    window.location.reload();
+    },
+});
+}
 
 
     //   function add_budget() {
@@ -106,16 +119,6 @@ function show_budget() {
     //       },
     //     });
     //   }
-    //   function delete_budget(num) {
-    //     $.ajax({
-    //       type: "POST",
-    //       url: "/bucket/undo",
-    //       data: { num_give: num },
-    //       success: function (response) {
-    //         //alert(response["msg"]);
-    //         window.location.reload();
-    //       },
-    //     });
-    //   }
+    //   
 
       
