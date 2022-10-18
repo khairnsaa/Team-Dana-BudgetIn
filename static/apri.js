@@ -2,8 +2,8 @@
 $(document).ready(function () {
     show_budget();
     // save_budget();
-    update_budget();
-    delete_budget();
+    // update_budget();
+    // delete_budget();
     });
 
 // Formating input number
@@ -84,17 +84,17 @@ function show_budget() {
     })
 }
 
-function delete_budget(num) {
-    $.ajax({
-    type: "POST",
-    url: "/delete",
-    data: { num_give: num },
-    success: function (response) {
-    //alert(response["msg"]);
-    window.location.reload();
-    },
-});
-}
+// function delete_budget(num) {
+//     $.ajax({
+//     type: "POST",
+//     url: "/delete",
+//     data: { num_give: num },
+//     success: function (response) {
+//     //alert(response["msg"]);
+//     window.location.reload();
+//     },
+// });
+// }
 
 
     //   function add_budget() {
@@ -123,20 +123,23 @@ function delete_budget(num) {
     //   
 
 function post_budget() {
-let desc =  $(".input-description").val();
-let value = $(".input-value").val();
-let budget_type = $( ".budget_type option:selected" ).val()
-$.ajax({
-    type: "POST",
-    url:"/budgetin",
-    data:{
-    description_give: desc,
-    value_give:value,
-    type_receive:budget_type
-    },
-    success:function (response){
-    console.log(response)
-    }
+    let desc =  $(".input-description").val();
+    let value = $(".input-value").val();
+    let budget_type = $( ".budget_type option:selected" ).val()
+    console.log(desc)
+    console.log(value)
+    console.log(budget_type)
+    $.ajax({
+        type: "POST",
+        url:"/budgetin/post",
+        data:{
+            description_give: desc,
+            value_give:value,
+            type_give:budget_type
+        },
+        success:function (response){
+        console.log(response)
+        }
 })
 }
 

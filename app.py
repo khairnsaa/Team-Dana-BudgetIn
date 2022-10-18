@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Ngambil halaman
 @app.route('/')
-def budgetin():
+def home():
     return render_template('index.html')
 
 # Ngambil halaman login
@@ -19,11 +19,11 @@ def budgetin():
 # Ambil informasi budget dari database
 @app.route('/budgetin', methods=['GET'])
 def budgetin_get():
-    budget_list = list(db.budgetin.find({}, {'_id': False,'user_id': False}))
+    budget_list = list(db.budgetin.find({}, {'_id': False}))
     return jsonify({'budget': budget_list})
 
 # Menambahkan data dari form (dari client) ke server
-@app.route("/budgetin", methods=["POST"])
+@app.route("/budgetin/post", methods=["POST"])
 def budgetin_post():
     # Mengambil data dari form (dari client)
     # date_receive = request.form['date_give'] #### Tanggal mungkin bisa dibikin otomatis
