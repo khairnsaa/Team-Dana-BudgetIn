@@ -58,6 +58,8 @@ function show_budget() {
                         </div>
                   </div>
                   `
+                  $("#income-list").append(temp_html_income);
+
               } else if (row[i]['type'] === 'exp') {
                   let num = rows[i]["num"];
                   let date = rows[i]["date"];
@@ -77,31 +79,10 @@ function show_budget() {
                         </div>
                   </div>
                   `
+                  $("#expense-list").append(temp_html_expense);
               }
 
 
-
-
-    //           if (done === 0) {
-    //             temp_html = `
-    //     <li>
-    //         <h2>✅ ${bucket}</h2>
-    //         <button onclick="done_bucket(${num})" type="button" class="btn btn-outline-primary">Mark as complete</button>
-    //     </li>
-    //                         `;
-    //           } else {
-    //             temp_html = `
-    //     <li>
-    //         <h2 class="done">✅ ${bucket}</h2>
-    //         <button onclick="undo_bucket(${num})" type="button" class="btn btn-outline-danger">Cancel</button>
-    //     </li>
-    //                         `;
-    //           }
-    //           $("#bucket-list").append(temp_html);
-    //         }
-    //       },
-    //     });
-    //   }
     //   function add_budget() {
     //     let bucket = $("#bucket").val();
     //     $.ajax({
