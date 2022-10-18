@@ -1,7 +1,7 @@
 // Fungsi baru berjalan ketika dokumen selesai loading
 $(document).ready(function () {
     show_budget();
-    save_budget();
+    // save_budget();
     update_budget();
     delete_budget();
     });
@@ -79,8 +79,9 @@ function show_budget() {
                         </div>
                   </div>
                   `
-                  $("#expense-list").append(temp_html_expense);}}}
-    }
+                  $("#expense-list").append(temp_html_expense);
+                }}}
+    })
 }
 
 function delete_budget(num) {
@@ -120,5 +121,28 @@ function delete_budget(num) {
     //     });
     //   }
     //   
+
+function post_budget() {
+let desc =  $(".input-description").val();
+let value = $(".input-value").val();
+let budget_type = $( ".budget_type option:selected" ).val()
+$.ajax({
+    type: "POST",
+    url:"/budgetin",
+    data:{
+    description_give: desc,
+    value_give:value,
+    type_receive:budget_type
+    },
+    success:function (response){
+    console.log(response)
+    }
+})
+}
+
+$(".input_btn").click(function () {
+console.log("save")
+post_budget()
+})
 
       
