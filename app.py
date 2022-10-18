@@ -31,9 +31,15 @@ def budgetin_post():
     description_receive = request.form['description_give']
     value_receive = request.form['value_give']
 
-    count = db.budgetin.count_documents({})
-    num = count + 1
-
+    # Kalau dokumen kosong, indeksnya dikasih 1. 
+    # Kalau berisi, dicari yang tertinggi dan numnya 1 angka lebih tinggi.
+    if db.budgetin.count_documents({}) != 0:
+        list_db= list(db.budgetin.find().sort('num',-1))
+        highest_val= list_db[0]['num']
+        num = highest_val + 1
+    else:
+         num = 1
+    
     # Mengumpulkan data menjadi 1 objek/array, mempermudah pengiriman
     doc = {
         'num' : num,

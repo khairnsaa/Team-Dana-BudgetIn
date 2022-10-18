@@ -1,9 +1,8 @@
 // Fungsi baru berjalan ketika dokumen selesai loading
 $(document).ready(function () {
     show_budget();
-    // save_budget();
     // update_budget();
-    // delete_budget();
+    delete_budget();
     });
 
 // Formating input number
@@ -52,7 +51,7 @@ function show_budget() {
                         <div class="value-cta">
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
                             <div class="item-delete-update">
-                                <button onclick="update_budget(${num})"><i class="fas fa-edit"></i>/button>
+                                <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
                                 <button onclick="delete_budget(${num})"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
@@ -73,7 +72,7 @@ function show_budget() {
                         <div class="value-cta">
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
                             <div class="item-delete-update">
-                                <button onclick="update_budget(${num})"><i class="fas fa-edit"></i>/button>
+                                <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
                                 <button onclick="delete_budget(${num})"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
@@ -84,17 +83,17 @@ function show_budget() {
     })
 }
 
-// function delete_budget(num) {
-//     $.ajax({
-//     type: "POST",
-//     url: "/delete",
-//     data: { num_give: num },
-//     success: function (response) {
-//     //alert(response["msg"]);
-//     window.location.reload();
-//     },
-// });
-// }
+function delete_budget(num) {
+    $.ajax({
+    type: "POST",
+    url: "/delete",
+    data: { num_give: num },
+    success: function (response) {
+    //alert(response["msg"]);
+    window.location.reload();
+    },
+});
+}
 
     //   function update_budget(num) {
     //     $.ajax({
@@ -128,6 +127,7 @@ function post_budget() {
         console.log(response)
         }
 })
+window.location.reload();
 }
 
 $(".input_btn").click(function () {
