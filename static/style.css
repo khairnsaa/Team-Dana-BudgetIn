@@ -30,6 +30,7 @@ body{
 .total-income, .total-expense{ 
     display: flex;
     justify-content: space-around;
+    align-items: center;
     margin: 0.5rem 0;
     width: 14rem;
     padding: 0.8rem 0;
@@ -38,7 +39,7 @@ body{
 .total-income{ background-color: rgb(21, 185, 131);}
 .total-expense{ background-color: rgb(241, 116, 67);}
 
-.input-container, .input-budget{
+.input-container, .input-budget, .update-budget{
     display: flex;
     justify-content: center;
 }
@@ -50,12 +51,12 @@ body{
 
 
 .input-container .budget_type:focus,
-.input-container .input-description:focus,
-.input-container .input-value:focus{ 
+.input-container .input-description:focus, .update-description:focus,
+.input-container .input-value:focus, .update-value:focus{ 
     border: 0.13rem solid rgb(17, 172, 99);
 }
 
-.input-description, .input-value, .budget_type, .input_btn{
+.input-description, .update-description,.input-value, .update-value, .budget_type, .input_btn, .update_btn{
     outline: none;
     margin: 0 0.5rem;
     padding: 0.5rem 0.8rem;
@@ -63,13 +64,14 @@ body{
     border: 0.12rem solid #cccccc;
 }
 
-.input_btn{
+.input_btn, .update_btn{
     background-color: transparent;
     color: rgb(17, 172, 99);
+    transition: 0.4s;
     border: 0.12rem solid rgb(17, 172, 99);
 }
 
-.input-value{ width: 7rem;}
+.input-value, .update-value{ width: 7rem;}
 
 
 .income-expense-container, .item, .value-cta{
@@ -114,10 +116,24 @@ body{
     border-bottom: 0.12rem solid #cccccc;
 }
 
+.item-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.item-delete-update{
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
 .item-delete-update button{
     background-color: transparent;
     border: 0.12rem solid rgb(241, 116, 67);
     padding: 0.2rem 0.4rem;
+    margin-left: 0.5rem;
     color: rgb(212, 64, 44);
 }
 
@@ -125,19 +141,58 @@ body{
     color: rgb(17, 172, 99);
     border: 0.12rem solid rgb(17, 172, 99);
 }
+.item-delete-update button:hover, .input_btn:hover, .update_btn:hover{
+    background-color: rgb(17, 172, 99);
+    color: #fafafa;
+    transition: 0.4s;
+}
+
+.modal-container{
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.modal-card{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    width: fit-content;
+    background-color: #fafafa;
+    border: 0.12rem solid black;
+    padding: 1rem 2rem;
+    border-radius: 10rem;
+}
+
+button:hover{
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 425px){
-    .input-budget{
+    .input-budget, .update-budget{
         flex-direction: column;
     }
 
-    .budget_type, .input-description, .input-value{
+    .budget_type, .input-description, .update-description,.input-value,.update-value{
         margin: 0.5rem 0;
     }
 
-    .budget_type, .input-value{ width: 100%;}
+    .budget_type, .input-value,.update-value{ width: 100%;}
 
-    .input_btn{ margin: 0.5rem 0;}
+    .input_btn, .update_btn{ margin: 0.5rem 0;}
+
+    .item-container{
+        flex-direction: column;
+    }
+
+    .item-container div{
+        margin: 0.5rem 0;
+    }
 
     .income-expense-container{
         flex-direction: column;
@@ -151,8 +206,14 @@ body{
         margin-bottom: 1.5rem;
     }
 
+    .item-delete-update{
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     .item-delete-update button{
         padding: 0.6rem 1rem;
+        margin-bottom: 0.5rem;
     }
 }
 
