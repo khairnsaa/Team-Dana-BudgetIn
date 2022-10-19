@@ -137,6 +137,11 @@ body{
     color: rgb(212, 64, 44);
 }
 
+.update_btn-delete{
+    border: 0.12rem solid rgb(241, 116, 67);
+    color: rgb(212, 64, 44);
+}
+
 .income-list .item-delete-update button {
     color: rgb(17, 172, 99);
     border: 0.12rem solid rgb(17, 172, 99);

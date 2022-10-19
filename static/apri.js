@@ -102,18 +102,50 @@ function delete_budget(num) {
     });
 }
 
-    //   function update_budget(num) {
-    //     $.ajax({
-    //       type: "POST",
-    //       url: "/bucket/done",
-    //       data: { num_give: num },
-    //       success: function (response) {
-    //         //alert(response["msg"]);
-    //         window.location.reload();
-    //       },
-    //     });
-    //   }
-    //   
+function hide_modal(){
+    $(".modal-container").hide();
+}
+
+function update_budget(num) {
+    $.ajax({
+        type: "GET",
+        url: "/budgetin",
+        data: { num_give: num },
+        success: function (response) {
+            console.log(response);
+            // window.location.reload();
+        },
+    });
+    temp_modal_container = `
+    <div class="modal-container">
+        <div class="modal-card">
+            <div class="update-budget">
+            <div class="update_type">
+                <select class="budget_type">
+                <option value="inc">+</option>
+                <option value="exp">-</option>
+                </select>
+            </div>
+            <input
+                type="text"
+                class="update-description"
+                value=""
+                placeholder="Add Description"
+            />
+            <input
+                type="number"
+                class="update-value"
+                value=""
+                placeholder="Value"
+            />
+            <button class="update_btn"><i class="fas fa-check"></i></button>
+            <button class="update_btn update_btn-delete" onclick="hide_modal()"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+    </div>
+    `
+    $(".content").append(temp_modal_container);
+}
 
 function post_budget() {
     let desc =  $(".input-description").val();
