@@ -79,18 +79,22 @@ def budgetin_get():
     total_expense_list = list(db.budgetin.find({'type': 'exp'},{'_id': False,'num': False,'date': False,'description':False,'type':False})) 
 
     # Iterasi menjumlahkan total income dan total expense
-    i = 0
-    final_income=0
-    while i < len(total_income_list): 
-        final_income = final_income + int(total_income_list[i]['value'])
-        i=i+1
-    i = 0
-    final_expense=0
-    while i < len(total_expense_list): 
-        final_expense = final_expense + int(total_expense_list[i]['value'])
-        i=i+1
-    total_budget=final_income-final_expense
-    kolom_atas = {'final_income':final_income,'final_expense':final_expense,'total_budget':total_budget}
+    if db.budgetin.count_documents({}) != 0:
+        i = 0
+        final_income=0
+        while i < len(total_income_list): 
+            final_income = final_income + int(total_income_list[i]['value'])
+            i=i+1
+        i = 0
+        final_expense=0
+        while i < len(total_expense_list): 
+            final_expense = final_expense + int(total_expense_list[i]['value'])
+            i=i+1
+        total_budget=final_income-final_expense
+        kolom_atas = {'final_income':final_income,'final_expense':final_expense,'total_budget':total_budget}
+    else:
+        kolom_atas = {'final_income':0,'final_expense':0,'total_budget':0}
+
 
     return jsonify({'budgets': budget_list,'kolom_atas': kolom_atas})
 
@@ -108,11 +112,11 @@ def budgetin_get():
 #           |__/                                
 ########################################################################
 # Mengubah informasi budget yang ada.
-@app.route("/budgetin/update", methods=["POST"])
+@app.route("/budgetin/update", methods=["PUT"])
 def budgetin_update():
     # Mengambil data dari client
     num_receive = request.form['num_give']
-    date_receive = request.form['date_give']
+    # date_receive = request.form['date_give']
     type_receive = request.form['type_give']
     description_receive = request.form['description_give']
     value_receive = request.form['value_give']
@@ -120,7 +124,7 @@ def budgetin_update():
     # Memasukkan data ke server
     db.budgetin.update_one(
     {'num':num_receive}, 
-    {'$set': {'date': int(date_receive),
+    {'$set': {'date': int(time.time()),
         'type': int(type_receive),
         'description': int(description_receive),
         'value': int(value_receive)},}

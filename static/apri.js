@@ -172,7 +172,7 @@ function update_budget(num) {
                         <div class="modal-card">
                             <div class="update-budget">
                             <div class="update_type">
-                                <select class="budget_type">
+                                <select class="budget_type" id="update_type>
                                 ${
                                     response.budgets[i].type === 'inc' ?
                                     `
@@ -198,7 +198,7 @@ function update_budget(num) {
                                 value="${response.budgets[i].value}"
                                 placeholder="Value"
                             />
-                            <button class="update_btn"><i class="fas fa-check"></i></button>
+                            <button class="update_btn" onclick="update_budget_post(${num})" id="update_btn_modal"><i class="fas fa-check"></i></button>
                             <button class="update_btn update_btn-delete" onclick="hide_modal()"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
@@ -210,6 +210,36 @@ function update_budget(num) {
         },
     });
 }
+
+//onclick="update_budget_post(${num})"
+
+function update_budget_post(num) {
+    let desc =  $(".update-description").val();
+    let value = $(".update-value").val();
+    let budget_type = $( "#update_type option:selected" ).val();
+    console.log(budget_type)
+    $.ajax({
+        type: "PUT",
+        url:"/budgetin/update",
+        data:{
+            num_give: num,
+            description_give: desc,
+            value_give:value,
+            type_give:budget_type
+        },
+        success:function (response){
+        console.log(response)
+        console.log("update")
+        window.location.reload();
+        }
+})
+}
+
+// $("#update_btn_modal").click(function () {
+//     console.log("update")
+//     update_budget_post(num)
+//     })
+
 
 ///////////////////////////////////////////////////////////////////////////
 //  /$$$$$$$            /$$             /$$              
