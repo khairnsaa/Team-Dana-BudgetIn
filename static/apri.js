@@ -172,7 +172,7 @@ function update_budget(num) {
                         <div class="modal-card">
                             <div class="update-budget">
                             <div class="update_type">
-                                <select class="budget_type" id="update_type>
+                                <select class="budget_type" id="update_type">
                                 ${
                                     response.budgets[i].type === 'inc' ?
                                     `
@@ -217,29 +217,25 @@ function update_budget_post(num) {
     let desc =  $(".update-description").val();
     let value = $(".update-value").val();
     let budget_type = $( "#update_type option:selected" ).val();
+    console.log(num);
+    console.log(value)
+    console.log(desc)
     console.log(budget_type)
     $.ajax({
-        type: "PUT",
-        url:"/budgetin/update",
+        type: "POST",
+        url:"/budgetin/update/post",
         data:{
             num_give: num,
             description_give: desc,
-            value_give:value,
-            type_give:budget_type
+            value_give: value,
+            type_give: budget_type
         },
         success:function (response){
         console.log(response)
-        console.log("update")
-        window.location.reload();
+        console.log('data terkirim')
         }
 })
 }
-
-// $("#update_btn_modal").click(function () {
-//     console.log("update")
-//     update_budget_post(num)
-//     })
-
 
 ///////////////////////////////////////////////////////////////////////////
 //  /$$$$$$$            /$$             /$$              

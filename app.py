@@ -112,23 +112,21 @@ def budgetin_get():
 #           |__/                                
 ########################################################################
 # Mengubah informasi budget yang ada.
-@app.route("/budgetin/update", methods=["PUT"])
+@app.route("/budgetin/update/post", methods=["POST"])
 def budgetin_update():
     # Mengambil data dari client
     num_receive = request.form['num_give']
-    # date_receive = request.form['date_give']
+    date_receive = int(time.time())
     type_receive = request.form['type_give']
     description_receive = request.form['description_give']
     value_receive = request.form['value_give']
 
     # Memasukkan data ke server
-    db.budgetin.update_one(
-    {'num':num_receive}, 
-    {'$set': {'date': int(time.time()),
-        'type': int(type_receive),
-        'description': int(description_receive),
-        'value': int(value_receive)},}
-    )
+    db.budgetin.update_one({'num':int(num_receive)}, {"$set": {"date": date_receive}})
+    db.budgetin.update_one({'num':int(num_receive)}, {"$set": {"type": type_receive}})
+    db.budgetin.update_one({'num':int(num_receive)}, {"$set": {"description": description_receive}})
+    db.budgetin.update_one({'num':int(num_receive)}, {"$set": {"value": value_receive}})
+
     return jsonify({'msg': 'update done!'})
 
 ########################################################################
