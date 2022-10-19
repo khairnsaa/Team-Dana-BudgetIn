@@ -42,9 +42,7 @@ function post_budget() {
     let desc =  $(".input-description").val();
     let value = $(".input-value").val();
     let budget_type = $( ".budget_type option:selected" ).val()
-    console.log(desc)
-    console.log(value)
-    console.log(budget_type)
+
     $.ajax({
         type: "POST",
         url:"/budgetin/post",
@@ -61,7 +59,6 @@ function post_budget() {
 }
 
 $(".input_btn").click(function () {
-console.log("save")
 post_budget()
 })
 
@@ -166,7 +163,6 @@ function update_budget(num) {
             console.log(response.budgets)
             for(let i=0; i<response.budgets.length; i++){
                 if(num == response.budgets[i].num){
-                    console.log('bisa')
                     temp_modal_container = `
                     <div class="modal-container">
                         <div class="modal-card">
@@ -217,10 +213,7 @@ function update_budget_post(num) {
     let desc =  $(".update-description").val();
     let value = $(".update-value").val();
     let budget_type = $( "#update_type option:selected" ).val();
-    console.log(num);
-    console.log(value)
-    console.log(desc)
-    console.log(budget_type)
+
     $.ajax({
         type: "POST",
         url:"/budgetin/update/post",
@@ -232,7 +225,7 @@ function update_budget_post(num) {
         },
         success:function (response){
         console.log(response)
-        console.log('data terkirim')
+        window.location.reload();
         }
 })
 }
