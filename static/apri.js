@@ -24,7 +24,7 @@ const formatNumber = (number, type) => {
 
 // Mengubah tanggal dari timestamp menjadi tanggal biasanya
 function date_convert(date){
-    var d = new Date(date*1000);
+    const d = new Date(date*1000);
     return d.toDateString()
 }
 
