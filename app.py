@@ -20,8 +20,28 @@ def home():
 # Ambil informasi budget dari database
 @app.route('/budgetin', methods=['GET'])
 def budgetin_get():
+    # Ngambil data, tunjukin di kolom bawah.
     budget_list = list(db.budgetin.find({}, {'_id': False}))
-    return jsonify({'budgets': budget_list})
+    # Ngambil data, tunjukin di kolom atas.
+    # Mengambil informasi value dari semua data
+    total_income_list = list(db.budgetin.find({'type': 'inc'},{'_id': False,'num': False,'date': False,'description':False,'type':False}))
+    total_expense_list = list(db.budgetin.find({'type': 'exp'},{'_id': False,'num': False,'date': False,'description':False,'type':False})) 
+
+    # Iterasi menjumlahkan total income dan total expense
+    i = 0
+    final_income=0
+    while i < len(total_income_list): 
+        final_income = final_income + int(total_income_list[i]['value'])
+        i=i+1
+    i = 0
+    final_expense=0
+    while i < len(total_expense_list): 
+        final_expense = final_expense + int(total_expense_list[i]['value'])
+        i=i+1
+    total_budget=final_income-final_expense
+    kolom_atas = {'final_income':final_income,'final_expense':final_expense,'total_budget':total_budget}
+
+    return jsonify({'budgets': budget_list,'kolom_atas': kolom_atas})
 
 # Menambahkan data dari form (dari client) ke server
 @app.route("/budgetin/post", methods=["POST"])

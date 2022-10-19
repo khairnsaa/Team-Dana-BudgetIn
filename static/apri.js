@@ -43,6 +43,12 @@ function show_budget() {
         url: "/budgetin",
         data: {},
         success: function (response) {
+        // Menampilkan total income, expense dan selisih di bagian atas
+        $("#total_budget").append(response["kolom_atas"]['total_budget'])
+        $("#final_income").append(response["kolom_atas"]['final_income'])
+        $("#final_expense").append(response["kolom_atas"]['final_expense'])
+
+        // Menampilkan daftar budget di bagian bawah    
         let rows = response["budgets"];
             for (let i = 0; i < rows.length; i++) {
               if (rows[i]['type'] === 'inc'){
@@ -74,7 +80,7 @@ function show_budget() {
 
                   temp_html_expense = `
                   <div class="item" id="expense-${num}">
-                    <div class="item-date">${date}</div>
+                    <div class="item-date">${date_convert(date)}</div>
                     <div class="item-description">${description}</div>
                         <div class="value-cta">
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
@@ -94,7 +100,7 @@ function delete_budget(num) {
     $.ajax({
         type: "POST",
         url: "/delete",
-        data: { num_give: num },
+        data: {num_give: num},
         success: function (response) {
         console.log(response)
         window.location.reload();
