@@ -17,32 +17,16 @@ def home():
 # def login():
 #     return render_template('login.html')
 
-# Ambil informasi budget dari database
-@app.route('/budgetin', methods=['GET'])
-def budgetin_get():
-    # Ngambil data, tunjukin di kolom bawah.
-    budget_list = list(db.budgetin.find({}, {'_id': False}))
-    # Ngambil data, tunjukin di kolom atas.
-    # Mengambil informasi value dari semua data
-    total_income_list = list(db.budgetin.find({'type': 'inc'},{'_id': False,'num': False,'date': False,'description':False,'type':False}))
-    total_expense_list = list(db.budgetin.find({'type': 'exp'},{'_id': False,'num': False,'date': False,'description':False,'type':False})) 
-
-    # Iterasi menjumlahkan total income dan total expense
-    i = 0
-    final_income=0
-    while i < len(total_income_list): 
-        final_income = final_income + int(total_income_list[i]['value'])
-        i=i+1
-    i = 0
-    final_expense=0
-    while i < len(total_expense_list): 
-        final_expense = final_expense + int(total_expense_list[i]['value'])
-        i=i+1
-    total_budget=final_income-final_expense
-    kolom_atas = {'final_income':final_income,'final_expense':final_expense,'total_budget':total_budget}
-
-    return jsonify({'budgets': budget_list,'kolom_atas': kolom_atas})
-
+########################################################################
+#    /$$$$$$                                  /$$              
+#   /$$__  $$                                | $$              
+#  | $$  \__/  /$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$    /$$$$$$ 
+#  | $$       /$$__  $$ /$$__  $$ |____  $$|_  $$_/   /$$__  $$
+#  | $$      | $$  \__/| $$$$$$$$  /$$$$$$$  | $$    | $$$$$$$$
+#  | $$    $$| $$      | $$_____/ /$$__  $$  | $$ /$$| $$_____/
+#  |  $$$$$$/| $$      |  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$$
+#   \______/ |__/       \_______/ \_______/   \___/   \_______/
+########################################################################
 # Menambahkan data dari form (dari client) ke server
 @app.route("/budgetin/post", methods=["POST"])
 def budgetin_post():
@@ -74,6 +58,55 @@ def budgetin_post():
     db.budgetin.insert_one(doc)
     return jsonify({'msg': 'Data added!'})
 
+########################################################################
+#  /$$$$$$$                            /$$
+# | $$__  $$                          | $$
+# | $$  \ $$  /$$$$$$   /$$$$$$   /$$$$$$$
+# | $$$$$$$/ /$$__  $$ |____  $$ /$$__  $$
+# | $$__  $$| $$$$$$$$  /$$$$$$$| $$  | $$
+# | $$  \ $$| $$_____/ /$$__  $$| $$  | $$
+# | $$  | $$|  $$$$$$$|  $$$$$$$|  $$$$$$$
+# |__/  |__/ \_______/ \_______/ \_______/
+########################################################################
+# Ambil informasi budget dari database
+@app.route('/budgetin', methods=['GET'])
+def budgetin_get():
+    # Ngambil data, tunjukin di kolom bawah.
+    budget_list = list(db.budgetin.find({}, {'_id': False}))
+    # Ngambil data, tunjukin di kolom atas.
+    # Mengambil informasi value dari semua data
+    total_income_list = list(db.budgetin.find({'type': 'inc'},{'_id': False,'num': False,'date': False,'description':False,'type':False}))
+    total_expense_list = list(db.budgetin.find({'type': 'exp'},{'_id': False,'num': False,'date': False,'description':False,'type':False})) 
+
+    # Iterasi menjumlahkan total income dan total expense
+    i = 0
+    final_income=0
+    while i < len(total_income_list): 
+        final_income = final_income + int(total_income_list[i]['value'])
+        i=i+1
+    i = 0
+    final_expense=0
+    while i < len(total_expense_list): 
+        final_expense = final_expense + int(total_expense_list[i]['value'])
+        i=i+1
+    total_budget=final_income-final_expense
+    kolom_atas = {'final_income':final_income,'final_expense':final_expense,'total_budget':total_budget}
+
+    return jsonify({'budgets': budget_list,'kolom_atas': kolom_atas})
+
+########################################################################
+#  /$$   /$$                 /$$             /$$              
+# | $$  | $$                | $$            | $$              
+# | $$  | $$  /$$$$$$   /$$$$$$$  /$$$$$$  /$$$$$$    /$$$$$$ 
+# | $$  | $$ /$$__  $$ /$$__  $$ |____  $$|_  $$_/   /$$__  $$
+# | $$  | $$| $$  \ $$| $$  | $$  /$$$$$$$  | $$    | $$$$$$$$
+# | $$  | $$| $$  | $$| $$  | $$ /$$__  $$  | $$ /$$| $$_____/
+# |  $$$$$$/| $$$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$$
+#  \______/ | $$____/  \_______/ \_______/   \___/   \_______/
+#           | $$                                              
+#           | $$                                              
+#           |__/                                
+########################################################################
 # Mengubah informasi budget yang ada.
 @app.route("/budgetin/update", methods=["POST"])
 def budgetin_update():
@@ -94,6 +127,16 @@ def budgetin_update():
     )
     return jsonify({'msg': 'update done!'})
 
+########################################################################
+#  /$$$$$$$            /$$             /$$              
+# | $$__  $$          | $$            | $$              
+# | $$  \ $$  /$$$$$$ | $$  /$$$$$$  /$$$$$$    /$$$$$$ 
+# | $$  | $$ /$$__  $$| $$ /$$__  $$|_  $$_/   /$$__  $$
+# | $$  | $$| $$$$$$$$| $$| $$$$$$$$  | $$    | $$$$$$$$
+# | $$  | $$| $$_____/| $$| $$_____/  | $$ /$$| $$_____/
+# | $$$$$$$/|  $$$$$$$| $$|  $$$$$$$  |  $$$$/|  $$$$$$$
+# |_______/  \_______/|__/ \_______/   \___/   \_______/
+########################################################################
 # Menghapus informasi budget dari database
 @app.route("/delete", methods=["POST"])
 def delete_budget():

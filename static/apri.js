@@ -1,8 +1,6 @@
 // Fungsi baru berjalan ketika dokumen selesai loading
 $(document).ready(function () {
     show_budget();
-    // update_budget();
-    delete_budget();
     });
 
 // Formating input number
@@ -30,7 +28,53 @@ function date_convert(date){
     return d.toDateString()
 }
 
+///////////////////////////////////////////////////////////////////////////
+//   /$$$$$$                                  /$$              
+//  /$$__  $$                                | $$              
+// | $$  \__/  /$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$    /$$$$$$ 
+// | $$       /$$__  $$ /$$__  $$ |____  $$|_  $$_/   /$$__  $$
+// | $$      | $$  \__/| $$$$$$$$  /$$$$$$$  | $$    | $$$$$$$$
+// | $$    $$| $$      | $$_____/ /$$__  $$  | $$ /$$| $$_____/
+// |  $$$$$$/| $$      |  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$$
+//  \______/ |__/       \_______/ \_______/   \___/   \_______/
+///////////////////////////////////////////////////////////////////////////
+function post_budget() {
+    let desc =  $(".input-description").val();
+    let value = $(".input-value").val();
+    let budget_type = $( ".budget_type option:selected" ).val()
+    console.log(desc)
+    console.log(value)
+    console.log(budget_type)
+    $.ajax({
+        type: "POST",
+        url:"/budgetin/post",
+        data:{
+            description_give: desc,
+            value_give:value,
+            type_give:budget_type
+        },
+        success:function (response){
+        console.log(response)
+        window.location.reload();
+        }
+})
+}
 
+$(".input_btn").click(function () {
+console.log("save")
+post_budget()
+})
+
+///////////////////////////////////////////////////////////////////////////
+//  /$$$$$$$                            /$$
+// | $$__  $$                          | $$
+// | $$  \ $$  /$$$$$$   /$$$$$$   /$$$$$$$
+// | $$$$$$$/ /$$__  $$ |____  $$ /$$__  $$
+// | $$__  $$| $$$$$$$$  /$$$$$$$| $$  | $$
+// | $$  \ $$| $$_____/ /$$__  $$| $$  | $$
+// | $$  | $$|  $$$$$$$|  $$$$$$$|  $$$$$$$
+// |__/  |__/ \_______/ \_______/ \_______/
+///////////////////////////////////////////////////////////////////////////
 // Menampilkan daftar budget dari server (server dapat dari database)
 function show_budget() {
     // Mengosongkan daftar income dan expense
@@ -96,18 +140,19 @@ function show_budget() {
     })
 }
 
-function delete_budget(num) {
-    $.ajax({
-        type: "POST",
-        url: "/delete",
-        data: {num_give: num},
-        success: function (response) {
-        console.log(response)
-        window.location.reload();
-        },
-    });
-}
-
+///////////////////////////////////////////////////////////////////////////
+//  /$$   /$$                 /$$             /$$              
+// | $$  | $$                | $$            | $$              
+// | $$  | $$  /$$$$$$   /$$$$$$$  /$$$$$$  /$$$$$$    /$$$$$$ 
+// | $$  | $$ /$$__  $$ /$$__  $$ |____  $$|_  $$_/   /$$__  $$
+// | $$  | $$| $$  \ $$| $$  | $$  /$$$$$$$  | $$    | $$$$$$$$
+// | $$  | $$| $$  | $$| $$  | $$ /$$__  $$  | $$ /$$| $$_____/
+// |  $$$$$$/| $$$$$$$/|  $$$$$$$|  $$$$$$$  |  $$$$/|  $$$$$$$
+//  \______/ | $$____/  \_______/ \_______/   \___/   \_______/
+//           | $$                                              
+//           | $$                                              
+//           |__/                                
+///////////////////////////////////////////////////////////////////////////
 function hide_modal(){
     $(".modal-container").hide();
 }
@@ -166,31 +211,24 @@ function update_budget(num) {
     });
 }
 
-function post_budget() {
-    let desc =  $(".input-description").val();
-    let value = $(".input-value").val();
-    let budget_type = $( ".budget_type option:selected" ).val()
-    console.log(desc)
-    console.log(value)
-    console.log(budget_type)
+///////////////////////////////////////////////////////////////////////////
+//  /$$$$$$$            /$$             /$$              
+// | $$__  $$          | $$            | $$              
+// | $$  \ $$  /$$$$$$ | $$  /$$$$$$  /$$$$$$    /$$$$$$ 
+// | $$  | $$ /$$__  $$| $$ /$$__  $$|_  $$_/   /$$__  $$
+// | $$  | $$| $$$$$$$$| $$| $$$$$$$$  | $$    | $$$$$$$$
+// | $$  | $$| $$_____/| $$| $$_____/  | $$ /$$| $$_____/
+// | $$$$$$$/|  $$$$$$$| $$|  $$$$$$$  |  $$$$/|  $$$$$$$
+// |_______/  \_______/|__/ \_______/   \___/   \_______/
+///////////////////////////////////////////////////////////////////////////
+function delete_budget(num) {
     $.ajax({
         type: "POST",
-        url:"/budgetin/post",
-        data:{
-            description_give: desc,
-            value_give:value,
-            type_give:budget_type
-        },
-        success:function (response){
+        url: "/delete",
+        data: {num_give: num},
+        success: function (response) {
         console.log(response)
         window.location.reload();
-        }
-})
+        },
+    });
 }
-
-$(".input_btn").click(function () {
-console.log("save")
-post_budget()
-})
-
-      
