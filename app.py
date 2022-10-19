@@ -81,5 +81,6 @@ def delete_budget():
     db.budgetin.delete_one({'num': int(num_receive)})
     return jsonify({'msg': 'delete done!'})
 
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
