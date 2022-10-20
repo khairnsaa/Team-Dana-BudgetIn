@@ -41,21 +41,27 @@ function date_convert(date){
 function post_budget() {
     let desc =  $(".input-description").val();
     let value = $(".input-value").val();
-    let budget_type = $( ".budget_type option:selected" ).val()
-
-    $.ajax({
-        type: "POST",
-        url:"/budgetin/post",
-        data:{
-            description_give: desc,
-            value_give:value,
-            type_give:budget_type
-        },
-        success:function (response){
-        console.log(response)
-        window.location.reload();
-        }
-})
+    let budget_type = $( ".budget_type option:selected" ).val();
+    if (value === "" || desc === ""){
+        $(".input_btn").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});
+        $(".modal-body").text("Description and value must be filled");
+        return false;
+    } 
+    else {
+        $.ajax({
+            type: "POST",
+            url:"/budgetin/post",
+            data:{
+                description_give: desc,
+                value_give:value,
+                type_give:budget_type
+            },
+            success:function (response){
+            console.log(response)
+            window.location.reload();
+            }
+    })
+    }
 }
 
 $(".input_btn").click(function () {
@@ -251,3 +257,14 @@ function delete_budget(num) {
         },
     });
 }
+
+
+$(".input-description, .input-value").on("change",() => {
+    $(".input_btn").prop("disabled",false);
+});
+
+function init() {
+    $(".input_btn").prop("disabled",true);
+}
+
+init();
