@@ -19,8 +19,10 @@ const formatNumber = (number, type) => {
  
 	rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
     
-    return `${type === 'inc' ? '+' : '-'} ${rupiah}` 
+    return `${type === 'inc' ? '+' :  '-'} ${rupiah}` 
 }
+
+
 
 // Mengubah tanggal dari timestamp menjadi tanggal biasanya
 function date_convert(date){
@@ -40,7 +42,7 @@ function date_convert(date){
 ///////////////////////////////////////////////////////////////////////////
 function post_budget() {
     let desc =  $(".input-description").val();
-    let value = $(".input-value").val();
+    let value = Math.abs($(".input-value").val());
     let budget_type = $( ".budget_type option:selected" ).val();
     if (value === "" || desc === ""){
         $(".input_btn").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});
@@ -91,9 +93,13 @@ function show_budget() {
         data: {},
         success: function (response) {
         // Menampilkan total income, expense dan selisih di bagian atas
-        $("#total_budget").append(response["kolom_atas"]['total_budget'])
-        $("#final_income").append(response["kolom_atas"]['final_income'])
-        $("#final_expense").append(response["kolom_atas"]['final_expense'])
+        if (response['kolom_atas']['total_budget'] >= 0){
+            $("#total_budget").append(formatNumber(response["kolom_atas"]['total_budget'],'inc'))
+        } else {
+            $("#total_budget").append(formatNumber(Math.abs(response["kolom_atas"]['total_budget']),'exp'))
+        }
+        $("#final_income").append(formatNumber(response["kolom_atas"]['final_income'],'inc'))
+        $("#final_expense").append(formatNumber(response["kolom_atas"]['final_expense'],'exp'))
 
         // Menampilkan daftar budget di bagian bawah    
         let rows = response["budgets"];
@@ -132,7 +138,7 @@ function show_budget() {
                         <div class="income-expense-content">
                             <div class="item-date">${date_convert(date)}</div>
                             <div class="item-description">${description}</div>
-                            <div class="item-value">${formatNumber(value, 'inc')}</div>
+                            <div class="item-value">${formatNumber(value, 'exp')}</div>
                         </div>
                         <div class="value-cta">
                             <div class="item-delete-update">
