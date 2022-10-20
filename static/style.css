@@ -106,6 +106,12 @@ body{
 
 .income-title{ color: rgb(17, 172, 99);}
 
+.income-expense-content{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    width: 100%;
+}
+
 .item{ 
     justify-content: space-between;
     align-items: center;
@@ -190,6 +196,12 @@ button:hover{
     .budget_type, .input-value,.update-value{ width: 100%;}
 
     .input_btn, .update_btn{ margin: 0.5rem 0;}
+
+    .income-expense-content{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        width: 100%;
+    }
 
     .item-container{
         flex-direction: column;

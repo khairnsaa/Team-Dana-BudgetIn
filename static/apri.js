@@ -106,10 +106,12 @@ function show_budget() {
 
                   temp_html_income = `
                   <div class="item" id="income-${num}">
-                    <div class="item-date">${date_convert(date)}</div>
-                    <div class="item-description">${description}</div>
+                    <div class="income-expense-content">
+                        <div class="item-date">${date_convert(date)}</div>
+                        <div class="item-description">${description}</div>
+                        <div class="item-value">${formatNumber(value, 'inc')}</div>
+                    </div>
                         <div class="value-cta">
-                            <div class="item-value">${formatNumber(value, 'inc')}</div>
                             <div class="item-delete-update">
                                 <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
                                 <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-times"></i></button>
@@ -126,11 +128,13 @@ function show_budget() {
                   let value = rows[i]["value"];
 
                   temp_html_expense = `
-                  <div class="item" id="expense-${num}">
-                    <div class="item-date">${date_convert(date)}</div>
-                    <div class="item-description">${description}</div>
-                        <div class="value-cta">
+                    <div class="item" id="expense-${num}">
+                        <div class="income-expense-content">
+                            <div class="item-date">${date_convert(date)}</div>
+                            <div class="item-description">${description}</div>
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
+                        </div>
+                        <div class="value-cta">
                             <div class="item-delete-update">
                                 <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
                                 <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-times"></i></button>
