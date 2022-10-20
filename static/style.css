@@ -229,3 +229,9 @@ button:hover{
         padding: 0.5rem;
     }
 }
+
+.input_btn:disabled {
+    color: #6c757d;
+    border-color: #6c757d;
+    pointer-events: none;
+}
