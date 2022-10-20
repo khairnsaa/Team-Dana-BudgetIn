@@ -1,6 +1,7 @@
 // Fungsi baru berjalan ketika dokumen selesai loading
 $(document).ready(function () {
     show_budget();
+    goal_get();
     });
 
 // Formating input number
@@ -121,7 +122,7 @@ function show_budget() {
                         <div class="value-cta">
                             <div class="item-delete-update">
                                 <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
-                                <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-times"></i></button>
+                                <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                   </div>
@@ -144,7 +145,7 @@ function show_budget() {
                         <div class="value-cta">
                             <div class="item-delete-update">
                                 <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
-                                <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-times"></i></button>
+                                <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                   </div>
@@ -329,32 +330,73 @@ init();
 // \______/  \______/  \_______/|__/
 ///////////////////////////////////////////////////////////////////////////
 // Menambahkan Goal
+function muncul_modal_goal(){
+    temp_modal_container = `
+        <div class="modal-container">
+            <div class="modal-card-delete">
+                <div class="delete-budget">
+                    <div class="modal-delete-content">
+                        <input
+                        type="text"
+                        class="update-description"
+                        value=""
+                        placeholder="Add goal value"
+                        id="modal-update-goal"
+                        />
+                        <button class="update_btn" onclick="goal_post()" id="add_goal"><i class="fas fa-plus"></i></button>
+                        <button class="update_btn update_btn-delete" onclick="hide_modal()"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `
+    $(".content").append(temp_modal_container);
+}
+
+function tambah_tombol_goal() {
+    const value_goal = $('#saving_goal_value span').html();
+    console.log(value_goal)
+    if (value_goal != ""){
+        tambah_tombol=`
+        <button class="goals_btn" id="tombol_satu_edit">
+        <i class="fas fa-edit"></i>
+        <button class="goals_btn" id="tombol_satu_hapus">
+        <i class="fas fa-trash"></i>
+        `
+        $("#tempat_tombol").append(tambah_tombol);
+        $('#tombol_satu_tambah').hide();
+    } else {
+        $('#tombol_satu_tambah').show();
+    }
+};
+tambah_tombol_goal()
+
 function goal_post() {
-    let value = Math.abs($("#modal-update-goal").val());
-    if (value === ""){
-        // $("#tombol_satu_tambah").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});
-        $("#tombol_satu_tambah").on('click',() => {
-            console.log('modal tambah muncul')
-            $("#modal-tambah-goal").modal('show')
-        })
+    const value_goal = $('#modal-update-goal').val();
+    if (value_goal === ''){
+        $("#add_goal").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});   
         $(".modal-body").text("Description and value must be filled");
-        return false;
-    } 
-    else {
+    } else {
+        let value = Math.abs($("#modal-update-goal").val());
         $.ajax({
             type: "POST",
             url:"/goal_post",
             data:{
-                description_give: desc,
                 value_give:value,
             },
             success:function (response){
             console.log(response)
             window.location.reload();
             }
-    })
+        })
+        tambah_tombol_goal();
     }
 }
+
+//     } else {
+//     }
+// }
+
 // Menampilkan goal
 function goal_get() {
     // Mengambil data dari server 
@@ -364,25 +406,13 @@ function goal_get() {
         data: {},
         success: function (response) {
         // Menampilkan daftar budget di bagian bawah    
-        let rows = response["goal"];
-            for (let i = 0; i < rows.length; i++) {
-                if (rows[i]['is_active'] === 1){
-                  $("#saving_goal").append(formatNumber(response[rows[i]]['value'],'inc'));
-                //   $("#tombol_satu_tambah").hide();
-                print("ada goal")
-                tambah_tombol=`
-                <button class="goals_btn" id="tombol_satu_edit">
-                <i class="fas fa-check"></i>
-                <button class="goals_btn" id="tombol_satu_hapus">
-                <i class="fas fa-trash"></i>
-                `
-              } else{
-                print("tidak ada goal")
-              }
+        let value_goal = response['goals'][0].value;
+        $("#saving_goal_value").append(formatNumber(value_goal,'inc'))
+
             }
-        }}
-    )
+        })
 }
+
 
 function modal_goal_post(){
     $("#id ").modal('show')
