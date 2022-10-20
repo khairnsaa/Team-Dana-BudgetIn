@@ -27,17 +27,33 @@ body{
 
 .income-expense{ margin-top: 1rem; }
 
-.total-income, .total-expense{ 
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.total-income, .total-expense, .saving-goal{ 
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 0.5rem;
     margin: 0.5rem 0;
-    width: 14rem;
-    padding: 0.8rem 0;
+    width: 15rem;
+    padding: 0.8rem;
 }
 
 .total-income{ background-color: rgb(21, 185, 131);}
 .total-expense{ background-color: rgb(241, 116, 67);}
+.saving-goal{ background-color: rgb(67, 192, 241);}
+
+.saving-goal-container{
+    display: flex;
+}
+
+.budget-income-text, 
+.budget-expense-text, 
+.saving-goal-text,
+.budget-income-value, 
+.budget-expense-value, 
+.saving-goal-value{
+    margin-bottom: 0;
+}
+
+.saving-goal-value{ align-self: center; }
 
 .input-container, .input-budget, .update-budget{
     display: flex;
@@ -64,11 +80,24 @@ body{
     border: 0.12rem solid #cccccc;
 }
 
-.input_btn, .update_btn{
+.input_btn, .update_btn, .goals_btn{
     background-color: transparent;
     color: rgb(17, 172, 99);
     transition: 0.4s;
     border: 0.12rem solid rgb(17, 172, 99);
+}
+
+.goals_btn{
+    background-color: rgb(39, 110, 138);
+    color: #fafafa;
+    padding: 0.8rem;
+    margin: 0.5rem ;
+    border: 0.12rem solid rgb(67, 192, 241);
+}
+
+.goals_btn:hover{
+    cursor: pointer;
+    background-color: rgb(67, 192, 241);
 }
 
 .input-value, .update-value{ width: 7rem;}
@@ -157,6 +186,12 @@ body{
     color: #fafafa;
     transition: 0.4s;
 }
+
+.update_btn.update_btn-delete:hover{
+    background-color: rgb(241, 116, 67);
+    color: #fafafa;
+}
+
 
 .modal-container{
     background-color: rgba(0, 0, 0, 0.5);
