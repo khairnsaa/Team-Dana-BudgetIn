@@ -175,7 +175,7 @@ function update_budget(num) {
                 if(num == response.budgets[i].num){
                     temp_modal_container = `
                     <div class="modal-container">
-                        <div class="modal-card-delete">
+                        <div class="modal-card">
                             <div class="update-budget">
                             <div class="update_type">
                                 <select class="budget_type" id="update_type">
@@ -254,15 +254,18 @@ function delete_budget(num) {
 
     temp_modal_container = `
     <div class="modal-container">
-        <div class="modal-card">
+        <div class="modal-card-delete">
             <div class="delete-budget">
                 <div class="modal-delete-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">WARNING</h1>
                     </div>
+                    <div class="modal-body-delete">Are sure want to deleted this budget?</div>
                 </div>
-                <button class="update_btn" onclick="clickDelete(${num})" id="update_btn_modal">Hapus <i class="fas fa-trash"></i></button>
-                <button class="update_btn update_btn-delete" onclick="hide_modal()">Batal <i class="fas fa-times"></i></button>
+                <div class="modal-footer">
+                    <button class="update_btn" onclick="clickDelete(${num})" id="update_btn_modal">Hapus <i class="fas fa-trash"></i></button>
+                    <button class="update_btn update_btn-delete" onclick="hide_modal()">Batal <i class="fas fa-times"></i></button>
+                </div>
             </div>
         </div>
     </div>
