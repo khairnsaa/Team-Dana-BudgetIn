@@ -112,7 +112,7 @@ function show_budget() {
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
                             <div class="item-delete-update">
                                 <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
-                                <button onclick="delete_budget(${num})"><i class="fas fa-times"></i></button>
+                                <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                   </div>
@@ -133,7 +133,7 @@ function show_budget() {
                             <div class="item-value">${formatNumber(value, 'inc')}</div>
                             <div class="item-delete-update">
                                 <button onclick="update_budget(${num})"><i class="fas fa-edit"></i></button>
-                                <button onclick="delete_budget(${num})"><i class="fas fa-times"></i></button>
+                                <button onclick="delete_budget(${num})" class="delete_button"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                   </div>
@@ -247,16 +247,25 @@ function update_budget_post(num) {
 // |_______/  \_______/|__/ \_______/   \___/   \_______/
 ///////////////////////////////////////////////////////////////////////////
 function delete_budget(num) {
-    $.ajax({
-        type: "POST",
-        url: "/delete",
-        data: {num_give: num},
-        success: function (response) {
-        console.log(response)
-        window.location.reload();
-        },
-    });
+    $(".delete_button").attr({"data-bs-toggle": "modal", "data-bs-target" : "#deleteModal"});
+    $(".modal-body-delete").text("Are sure want to deleted this budget?")
+    clickDelete(num)
 }
+
+function clickDelete (num){
+$("#deleteButton").on('click', () => {
+    $.ajax({
+            type: "POST",
+            url: "/delete",
+            data: {num_give: num},
+            success: function (response) {
+            console.log(response)
+            window.location.reload();
+            },
+        });
+    })
+}
+
 
 
 $(".input-description, .input-value").on("change",() => {
@@ -267,4 +276,11 @@ function init() {
     $(".input_btn").prop("disabled",true);
 }
 
+// function confirmDialogModal (message){
+//     $(".delete_button").attr({"data-bs-toggle": "modalDelete", "data-bs-target" : "#deleteModal"});
+//     if (result) {
+//     //Logic to delete the item
+// }
+// }
+// confirmDialogModal('are you sure')
 init();
