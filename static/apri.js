@@ -330,136 +330,136 @@ init();
 // \______/  \______/  \_______/|__/
 ///////////////////////////////////////////////////////////////////////////
 // Menambahkan Goal
-function muncul_modal_goal(){
-    temp_modal_container = `
-        <div class="modal-container">
-            <div class="modal-card-delete">
-                <div class="delete-budget">
-                    <div class="modal-delete-content">
-                        <input
-                        type="text"
-                        class="update-description"
-                        value=""
-                        placeholder="Add goal value"
-                        id="modal-update-goal"
-                        />
-                        <button class="update_btn" onclick="goal_post()" id="add_goal"><i class="fas fa-plus"></i></button>
-                        <button class="update_btn update_btn-delete" onclick="hide_modal()"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `
-    $(".content").append(temp_modal_container);
-}
+// function muncul_modal_goal(){
+//     temp_modal_container = `
+//         <div class="modal-container">
+//             <div class="modal-card-delete">
+//                 <div class="delete-budget">
+//                     <div class="modal-delete-content">
+//                         <input
+//                         type="text"
+//                         class="update-description"
+//                         value=""
+//                         placeholder="Add goal value"
+//                         id="modal-update-goal"
+//                         />
+//                         <button class="update_btn" onclick="goal_post()" id="add_goal"><i class="fas fa-plus"></i></button>
+//                         <button class="update_btn update_btn-delete" onclick="hide_modal()"><i class="fas fa-times"></i></button>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//         `
+//     $(".content").append(temp_modal_container);
+// }
 
-function tambah_tombol_goal() {
-    const value_goal = $('#saving_goal_value span').html();
-    console.log(value_goal)
-    if (value_goal != ""){
-        tambah_tombol=`
-        <button class="goals_btn" id="tombol_satu_edit">
-        <i class="fas fa-edit"></i>
-        <button class="goals_btn" id="tombol_satu_hapus">
-        <i class="fas fa-trash"></i>
-        `
-        $("#tempat_tombol").append(tambah_tombol);
-        $('#tombol_satu_tambah').hide();
-    } else {
-        $('#tombol_satu_tambah').show();
-    }
-};
-tambah_tombol_goal()
-
-function goal_post() {
-    const value_goal = $('#modal-update-goal').val();
-    if (value_goal === ''){
-        $("#add_goal").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});   
-        $(".modal-body").text("Description and value must be filled");
-    } else {
-        let value = Math.abs($("#modal-update-goal").val());
-        $.ajax({
-            type: "POST",
-            url:"/goal_post",
-            data:{
-                value_give:value,
-            },
-            success:function (response){
-            console.log(response)
-            window.location.reload();
-            }
-        })
-        tambah_tombol_goal();
-    }
-}
-
+// function tambah_tombol_goal() {
+//     const value_goal = $('#saving_goal_value span').html();
+//     console.log(value_goal)
+//     if (value_goal != ""){
+//         tambah_tombol=`
+//         <button class="goals_btn" id="tombol_satu_edit">
+//         <i class="fas fa-edit"></i>
+//         <button class="goals_btn" id="tombol_satu_hapus">
+//         <i class="fas fa-trash"></i>
+//         `
+//         $("#tempat_tombol").append(tambah_tombol);
+//         $('#tombol_satu_tambah').hide();
 //     } else {
+//         $('#tombol_satu_tambah').show();
+//     }
+// };
+// tambah_tombol_goal()
+
+// function goal_post() {
+//     const value_goal = $('#modal-update-goal').val();
+//     if (value_goal === ''){
+//         $("#add_goal").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});   
+//         $(".modal-body").text("Description and value must be filled");
+//     } else {
+//         let value = Math.abs($("#modal-update-goal").val());
+//         $.ajax({
+//             type: "POST",
+//             url:"/goal_post",
+//             data:{
+//                 value_give:value,
+//             },
+//             success:function (response){
+//             console.log(response)
+//             window.location.reload();
+//             }
+//         })
+//         tambah_tombol_goal();
 //     }
 // }
 
-// Menampilkan goal
-function goal_get() {
-    // Mengambil data dari server 
-    $.ajax({
-        type: "GET",
-        url: "/goal_get",
-        data: {},
-        success: function (response) {
-        // Menampilkan daftar budget di bagian bawah    
-        let value_goal = response['goals'][0].value;
-        $("#saving_goal_value").append(formatNumber(value_goal,'inc'))
+// //     } else {
+// //     }
+// // }
 
-            }
-        })
-}
+// // Menampilkan goal
+// function goal_get() {
+//     // Mengambil data dari server 
+//     $.ajax({
+//         type: "GET",
+//         url: "/goal_get",
+//         data: {},
+//         success: function (response) {
+//         // Menampilkan daftar budget di bagian bawah    
+//         let value_goal = response['goals'][0].value;
+//         $("#saving_goal_value").append(formatNumber(value_goal,'inc'))
 
-
-function modal_goal_post(){
-    $("#id ").modal('show')
-}
-
-function goal_update(is_active) {
-    $.ajax({
-        type: "GET",
-        url: "/goal_update",
-        data: { is_active_get: is_active },
-        success: function (response) {
-            for(let i=0; i<response.goal.length; i++){
-                if(num == response.goal[i].num){
-                    temp_modal_container = `
-DIUBAH
-                    `
-                    $(".content").append(temp_modal_container);
-                }                
-            }
-        },
-    });
-}
-
-function update_budget_post(is_active) {
-    let desc =  $(".update-description").val();
-    let value = $(".update-value").val();
-    let budget_type = $( "#update_type option:selected" ).val();
-
-    $.ajax({
-        type: "POST",
-        url:"/budgetin/update/post",
-        data:{
-            num_give: num,
-            description_give: desc,
-            value_give: value,
-            type_give: budget_type
-        },
-        success:function (response){
-        console.log(response)
-        window.location.reload();
-        }
-})
-}
+//             }
+//         })
+// }
 
 
+// function modal_goal_post(){
+//     $("#id ").modal('show')
+// }
 
+// function goal_update(is_active) {
+//     $.ajax({
+//         type: "GET",
+//         url: "/goal_update",
+//         data: { is_active_get: is_active },
+//         success: function (response) {
+//             for(let i=0; i<response.goal.length; i++){
+//                 if(num == response.goal[i].num){
+//                     temp_modal_container = `
+// DIUBAH
+//                     `
+//                     $(".content").append(temp_modal_container);
+//                 }                
+//             }
+//         },
+//     });
+// }
 
-// $(".input_btn").click(function () {
-// post_budget()
+// function update_budget_post(is_active) {
+//     let desc =  $(".update-description").val();
+//     let value = $(".update-value").val();
+//     let budget_type = $( "#update_type option:selected" ).val();
+
+//     $.ajax({
+//         type: "POST",
+//         url:"/budgetin/update/post",
+//         data:{
+//             num_give: num,
+//             description_give: desc,
+//             value_give: value,
+//             type_give: budget_type
+//         },
+//         success:function (response){
+//         console.log(response)
+//         window.location.reload();
+//         }
 // })
+// }
+
+
+
+
+// // $(".input_btn").click(function () {
+// // post_budget()
+// // })
