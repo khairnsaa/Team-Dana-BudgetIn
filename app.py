@@ -56,6 +56,7 @@ def budgetin_post():
 
     # Menambahkan data ke database
     db.budgetin.insert_one(doc)
+    print('masuk')
     return jsonify({'msg': 'Data added!'})
 
 ########################################################################
@@ -161,11 +162,58 @@ def delete_budget():
 ########################################################################
 
 
+########################################################################
+#   /$$$$$$                      /$$
+#  /$$__  $$                    | $$
+# | $$  \__/  /$$$$$$   /$$$$$$ | $$
+# | $$ /$$$$ /$$__  $$ |____  $$| $$
+# | $$|_  $$| $$  \ $$  /$$$$$$$| $$
+# | $$  \ $$| $$  | $$ /$$__  $$| $$
+# |  $$$$$$/|  $$$$$$/|  $$$$$$$| $$
+#  \______/  \______/  \_______/|__/
+########################################################################
+# Menambahkan data dari form (dari client) ke server
+@app.route("/goal_post", methods=["POST"])
+def goal_post():
+    # Mengambil data dari form (dari client)
+    value_receive = request.form['value_give']
+    
+    # Mengumpulkan data menjadi 1 objek/array, mempermudah pengiriman
+    doc = {
+        'is_active' : 1,
+        'value' : value_receive
+    }
 
+    # Menambahkan data ke database
+    db.goal.insert_one(doc)
+    return jsonify({'msg': 'Goal added!'})
 
+# Ambil informasi goal dari database
+@app.route('/goal_get', methods=['GET'])
+def goal_get():
+    # Ngambil data, tunjukin di goal
+    goal = list(db.goal.find({'is_active':1}, {'_id': False}))
 
+    return jsonify({'goal': goal})
 
+# Mengubah informasi budget yang ada.
+@app.route("/goal_update", methods=["POST"])
+def goal_update():
+    # Mengambil data dari client
+    value_receive = request.form['value_give']
 
+    # Memasukkan data ke server
+    db.goal.update_one({'is_active':1}, {"$set": {"value": value_receive}})
+
+    return jsonify({'msg': 'update goal done!'})
+
+# # Mengubah informasi budget yang ada.
+# @app.route("/goal_delete", methods=["POST"])
+# def goal_delete():
+#     # Memasukkan data ke server
+#     db.goal.update_one({'is_active':1}, {"$set": {"is_active": 0}})
+
+#     return jsonify({'msg': 'update goal done!'})
 
 
 

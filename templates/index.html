@@ -48,19 +48,19 @@
           <p class="budget-income-value">IDR <span id="final_income"></span></p>
         </div>
         <div class="total-expense">
-            <p class="budget-expense-text">EXPENSE</p>
-            <p class="budget-expense-value">
-                IDR <span id="final_expense"></span>
-            </p>
+          <p class="budget-expense-text">EXPENSE</p>
+          <p class="budget-expense-value">
+            IDR <span id="final_expense"></span>
+          </p>
         </div>
-        <div class="saving-goal-container">
-            <div class="saving-goal">
-                <p class="saving-goal-text">SAVING GOAL</p>
-                <p class="saving-goal-value">
-                    IDR <span id="saving_goal">123123123</span>
-                </p>
-            </div>
-            <button class="goals_btn"><i class="fas fa-plus"></i></button>
+        <div class="saving-goal-container" id="tempat_tombol">
+          <div class="saving-goal">
+            <p class="saving-goal-text">SAVING GOAL</p>
+            <p class="saving-goal-value">IDR <span id="saving_goal"></span></p>
+          </div>
+          <button class="goals_btn" id="tombol_satu_tambah">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -217,5 +217,28 @@
         </div>
       </div>
     </div> -->
+  <div class="modal-container" id="modal-tambah-goal" hidden>
+    <div class="modal-card">
+      <div class="update-budget">
+
+        </div>
+        <input
+          type="number"
+          id="modal-update-goal"
+          class="update-value"
+          value=""
+          placeholder="Value"
+        />
+        <button class="update_btn" id="modal-update-goal-update"><i class="fas fa-check"></i></button>
+        <button class="update_btn update_btn-delete" id="modal-update-goal-cancel"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
   </body>
 </html>

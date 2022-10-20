@@ -60,13 +60,14 @@ function post_budget() {
             },
             success:function (response){
             console.log(response)
-            window.location.reload();
+            // window.location.reload();
             }
     })
     }
 }
 
 $(".input_btn").click(function () {
+console.log('masuk 2')
 post_budget()
 })
 
@@ -316,3 +317,119 @@ function init() {
 // }
 // confirmDialogModal('are you sure')
 init();
+
+///////////////////////////////////////////////////////////////////////////
+//   /$$$$$$                      /$$
+//  /$$__  $$                    | $$
+// | $$  \__/  /$$$$$$   /$$$$$$ | $$
+// | $$ /$$$$ /$$__  $$ |____  $$| $$
+// | $$|_  $$| $$  \ $$  /$$$$$$$| $$
+// | $$  \ $$| $$  | $$ /$$__  $$| $$
+// |  $$$$$$/|  $$$$$$/|  $$$$$$$| $$
+// \______/  \______/  \_______/|__/
+///////////////////////////////////////////////////////////////////////////
+// Menambahkan Goal
+function goal_post() {
+    let value = Math.abs($("#modal-update-goal").val());
+    if (value === ""){
+        // $("#tombol_satu_tambah").attr({"data-bs-toggle": "modal", "data-bs-target" : "#exampleModal"});
+        $("#tombol_satu_tambah").on('click',() => {
+            console.log('modal tambah muncul')
+            $("#modal-tambah-goal").modal('show')
+        })
+        $(".modal-body").text("Description and value must be filled");
+        return false;
+    } 
+    else {
+        $.ajax({
+            type: "POST",
+            url:"/goal_post",
+            data:{
+                description_give: desc,
+                value_give:value,
+            },
+            success:function (response){
+            console.log(response)
+            window.location.reload();
+            }
+    })
+    }
+}
+// Menampilkan goal
+function goal_get() {
+    // Mengambil data dari server 
+    $.ajax({
+        type: "GET",
+        url: "/goal_get",
+        data: {},
+        success: function (response) {
+        // Menampilkan daftar budget di bagian bawah    
+        let rows = response["goal"];
+            for (let i = 0; i < rows.length; i++) {
+                if (rows[i]['is_active'] === 1){
+                  $("#saving_goal").append(formatNumber(response[rows[i]]['value'],'inc'));
+                //   $("#tombol_satu_tambah").hide();
+                print("ada goal")
+                tambah_tombol=`
+                <button class="goals_btn" id="tombol_satu_edit">
+                <i class="fas fa-check"></i>
+                <button class="goals_btn" id="tombol_satu_hapus">
+                <i class="fas fa-trash"></i>
+                `
+              } else{
+                print("tidak ada goal")
+              }
+            }
+        }}
+    )
+}
+
+function modal_goal_post(){
+    $("#id ").modal('show')
+}
+
+function goal_update(is_active) {
+    $.ajax({
+        type: "GET",
+        url: "/goal_update",
+        data: { is_active_get: is_active },
+        success: function (response) {
+            for(let i=0; i<response.goal.length; i++){
+                if(num == response.goal[i].num){
+                    temp_modal_container = `
+DIUBAH
+                    `
+                    $(".content").append(temp_modal_container);
+                }                
+            }
+        },
+    });
+}
+
+function update_budget_post(is_active) {
+    let desc =  $(".update-description").val();
+    let value = $(".update-value").val();
+    let budget_type = $( "#update_type option:selected" ).val();
+
+    $.ajax({
+        type: "POST",
+        url:"/budgetin/update/post",
+        data:{
+            num_give: num,
+            description_give: desc,
+            value_give: value,
+            type_give: budget_type
+        },
+        success:function (response){
+        console.log(response)
+        window.location.reload();
+        }
+})
+}
+
+
+
+
+// $(".input_btn").click(function () {
+// post_budget()
+// })
